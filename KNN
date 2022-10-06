@@ -1,0 +1,30 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(0)
+noise = np.random.rand(100, 1)
+x = np.random.rand(100, 1)
+y = 3 * x + 15 + noise
+
+plt.scatter(x,y,s=10)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
+
+from sklearn.neighbors import KNeighborsRegressor
+knnModel = KNeighborsRegressor(n_neighbors=3)
+knnModel.fit(x,y)
+predicted= knnModel.predict(x)
+
+from sklearn import metrics
+print('R2 score: ', knnModel.score(x, y))
+mse = metrics.mean_squared_error(y, predicted)
+print('MSE score: ', mse)
+
+plt.scatter(x, y, s=10, label='True')
+plt.scatter(x, predicted, color="r",s=10, label='Predicted')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
